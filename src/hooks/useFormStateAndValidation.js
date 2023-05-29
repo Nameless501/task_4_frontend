@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 function useFormStateAndValidation(initialValue = {}) {
@@ -11,22 +11,22 @@ function useFormStateAndValidation(initialValue = {}) {
     const location = useLocation();
 
     function handleStoreValues(name, value) {
-        setInputsValues(current => ({
+        setInputsValues((current) => ({
             ...current,
             [name]: value,
-        }))
+        }));
     }
 
     function handleErrorMessage(name, message) {
-        setErrorMessages(current => ({
+        setErrorMessages((current) => ({
             ...current,
             [name]: message,
-        }))
+        }));
     }
 
     function handleValidation(evt, name, validationMessage) {
         const isValid = evt.target.closest('form').checkValidity();
-        handleErrorMessage(name, validationMessage)
+        handleErrorMessage(name, validationMessage);
         setFormValidity(isValid);
     }
 
@@ -36,17 +36,26 @@ function useFormStateAndValidation(initialValue = {}) {
         handleValidation(evt, name, validationMessage);
     }
 
-    const resetFormValues = useCallback((newValues = {}, newErrors = {}, newIsValid = false) => {
-        setInputsValues(newValues);
-        setErrorMessages(newErrors);
-        setFormValidity(newIsValid);
-    }, [setInputsValues, setErrorMessages, setFormValidity]);
+    const resetFormValues = useCallback(
+        (newValues = {}, newErrors = {}, newIsValid = false) => {
+            setInputsValues(newValues);
+            setErrorMessages(newErrors);
+            setFormValidity(newIsValid);
+        },
+        [setInputsValues, setErrorMessages, setFormValidity]
+    );
 
     useEffect(() => {
         resetFormValues();
     }, [location, resetFormValues]);
 
-    return { inputsValue, errorMessages, formIsValid, handleChange, resetFormValues }
+    return {
+        inputsValue,
+        errorMessages,
+        formIsValid,
+        handleChange,
+        resetFormValues,
+    };
 }
 
 export default useFormStateAndValidation;

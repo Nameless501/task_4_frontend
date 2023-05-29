@@ -2,7 +2,7 @@ import { Table } from 'react-bootstrap';
 import MemoizedTableRow from './TableRow';
 import { usersTableConfig } from '../../../utils/configs';
 
-function UsersTable({ users=[], handleSelect, selected=[] }) {
+function UsersTable({ users = [], handleSelect, selected = [] }) {
     return (
         <Table striped bordered responsive hover className="text-center">
             <thead>

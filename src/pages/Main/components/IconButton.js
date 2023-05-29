@@ -4,7 +4,11 @@ function IconButton({ variant, icon: Icon, tooltip, handleClick, disabled }) {
     return (
         <OverlayTrigger placement="top" overlay={<Tooltip>{tooltip}</Tooltip>}>
             <ButtonGroup>
-                <Button variant={variant} onClick={handleClick} disabled={disabled}>
+                <Button
+                    variant={variant}
+                    onClick={handleClick}
+                    disabled={disabled}
+                >
                     <Icon />
                 </Button>
             </ButtonGroup>

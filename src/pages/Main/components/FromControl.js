@@ -1,9 +1,22 @@
-import { Container, ButtonGroup, Button, ButtonToolbar, Stack } from 'react-bootstrap';
+import {
+    Container,
+    ButtonGroup,
+    Button,
+    ButtonToolbar,
+    Stack,
+} from 'react-bootstrap';
 import IconButton from './IconButton';
 import { FiLock, FiUnlock } from 'react-icons/fi';
 import { BiBlock } from 'react-icons/bi';
 
-function FormControl({ selectAll, unselectAll, handleUsersBlock, handleUsersUnblock, handleUsersDelete, isValid }) {
+function FormControl({
+    selectAll,
+    unselectAll,
+    handleUsersBlock,
+    handleUsersUnblock,
+    handleUsersDelete,
+    isValid,
+}) {
     return (
         <Container className="px-0 d-flex justify-content-between align-items-end">
             <ButtonToolbar>

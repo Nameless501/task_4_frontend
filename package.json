@@ -21,7 +21,8 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "format": "prettier --write ."
+        "format": "prettier --write .",
+        "deploy": "gh-pages -d build"
     },
     "eslintConfig": {
         "extends": [

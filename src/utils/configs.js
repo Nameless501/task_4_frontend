@@ -79,5 +79,5 @@ export const signFormConfig = {
     redirect: {
         [routesConfig.signIn]: routesConfig.main,
         [routesConfig.signUp]: routesConfig.signIn,
-    }
+    },
 };

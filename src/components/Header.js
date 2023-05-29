@@ -1,9 +1,9 @@
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 import { Container, Navbar } from 'react-bootstrap';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import AuthMenu from './AuthMenu';
-import ProfileMenu from "./ProfileMenu";
-import { SiTask } from 'react-icons/si'
+import ProfileMenu from './ProfileMenu';
+import { SiTask } from 'react-icons/si';
 import { routesConfig } from '../utils/configs';
 
 function Header() {
@@ -14,17 +14,10 @@ function Header() {
             <Container>
                 <Link to={routesConfig.main}>
                     <Navbar.Brand className="d-inline-block">
-                        <SiTask />
-                        {' '}
-                        Task 4
+                        <SiTask /> Task 4
                     </Navbar.Brand>
                 </Link>
-                {
-                    isAuthorized ?
-                        <ProfileMenu />
-                        :
-                        <AuthMenu />
-                }
+                {isAuthorized ? <ProfileMenu /> : <AuthMenu />}
             </Container>
         </Navbar>
     );

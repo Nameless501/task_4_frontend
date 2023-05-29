@@ -1,5 +1,5 @@
 import { Nav, ButtonToolbar, Button, Stack } from 'react-bootstrap';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { routesConfig } from '../utils/configs';
 
 function AuthMenu() {
@@ -9,10 +9,18 @@ function AuthMenu() {
         <Nav>
             <ButtonToolbar>
                 <Stack direction="horizontal" gap={2}>
-                    <Button variant="primary" onClick={() => navigate(routesConfig.signIn)}>
+                    <Button
+                        variant="primary"
+                        onClick={() => navigate(routesConfig.signIn)}
+                    >
                         Sign-in
                     </Button>
-                    <Button variant="success" onClick={() => navigate(routesConfig.signUp)} >Sign-up</Button>
+                    <Button
+                        variant="success"
+                        onClick={() => navigate(routesConfig.signUp)}
+                    >
+                        Sign-up
+                    </Button>
                 </Stack>
             </ButtonToolbar>
         </Nav>

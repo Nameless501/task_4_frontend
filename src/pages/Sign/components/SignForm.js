@@ -1,7 +1,14 @@
 import { Form, Button, Stack } from 'react-bootstrap';
 import FormInput from './FormInput';
 
-function SignForm({ inputs = [], handleChange, inputsValue = {}, isValid = false, errorMessages, handleSubmit }) {
+function SignForm({
+    inputs = [],
+    handleChange,
+    inputsValue = {},
+    isValid = false,
+    errorMessages,
+    handleSubmit,
+}) {
     return (
         <Form onSubmit={handleSubmit}>
             <Stack gap={4}>
@@ -16,7 +23,13 @@ function SignForm({ inputs = [], handleChange, inputsValue = {}, isValid = false
                         />
                     );
                 })}
-                <Button variant="primary" type="submit" size="lg" disabled={!isValid} className='mt-2 col-md-4 offset-md-4'>
+                <Button
+                    variant="primary"
+                    type="submit"
+                    size="lg"
+                    disabled={!isValid}
+                    className="mt-2 col-md-4 offset-md-4"
+                >
                     Submit
                 </Button>
             </Stack>
