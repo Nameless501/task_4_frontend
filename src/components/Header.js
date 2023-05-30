@@ -8,7 +8,9 @@ import { SiTask } from 'react-icons/si';
 import { routesConfig, apiConfig } from '../utils/configs';
 
 function Header() {
-    const { user, status, isAuthorized } = useSelector((state) => state.currentUser);
+    const { user, status, isAuthorized } = useSelector(
+        (state) => state.currentUser
+    );
 
     const dispatch = useDispatch();
 

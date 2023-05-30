@@ -15,11 +15,12 @@ function PrivateRoutes() {
         }
     }, [isAuthorized, status]);
 
-    if (isAllowed === undefined) return (
-        <Container className='mt-5 d-flex justify-content-center'>
-            <Spinner animation="border" role="status" />
-        </Container>
-    );
+    if (isAllowed === undefined)
+        return (
+            <Container className="mt-5 d-flex justify-content-center">
+                <Spinner animation="border" role="status" />
+            </Container>
+        );
 
     return isAllowed ? <Outlet /> : <Navigate to={routesConfig.signIn} />;
 }

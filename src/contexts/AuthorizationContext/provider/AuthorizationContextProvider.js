@@ -9,7 +9,7 @@ export function AuthorizationContextProvider({ children }) {
 
     const checkAuthorization = useCallback(() => {
         dispatch(handleAuthorization(apiConfig.currentUser));
-    }, [dispatch])
+    }, [dispatch]);
 
     useEffect(() => {
         checkAuthorization();

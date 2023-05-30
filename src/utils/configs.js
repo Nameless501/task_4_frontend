@@ -54,7 +54,7 @@ export const signFormConfig = {
                 validation: {
                     minLength: 2,
                     maxLength: 30,
-                }
+                },
             },
             {
                 type: 'email',
@@ -62,7 +62,7 @@ export const signFormConfig = {
                 placeholder: 'Enter your email',
                 id: 'email-input',
                 name: 'email',
-                validation: {}
+                validation: {},
             },
             {
                 type: 'password',
@@ -70,7 +70,7 @@ export const signFormConfig = {
                 placeholder: 'Enter your password',
                 id: 'password-input',
                 name: 'password',
-                validation: {}
+                validation: {},
             },
         ],
         [routesConfig.signIn]: [
@@ -80,7 +80,7 @@ export const signFormConfig = {
                 placeholder: 'Enter your email',
                 id: 'email-input',
                 name: 'email',
-                validation: {}
+                validation: {},
             },
             {
                 type: 'password',
@@ -88,7 +88,7 @@ export const signFormConfig = {
                 placeholder: 'Enter your password',
                 id: 'password-input',
                 name: 'password',
-                validation: {}
+                validation: {},
             },
         ],
     },

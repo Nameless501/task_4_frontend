@@ -20,9 +20,13 @@ export const handleSignOut = createAsyncThunk(
     'currentUser/handleSignOut',
     async (path, { rejectWithValue }) => {
         try {
-            const response = await axios.post(path, {}, {
-                withCredentials: true,
-            });
+            const response = await axios.post(
+                path,
+                {},
+                {
+                    withCredentials: true,
+                }
+            );
             return response.data;
         } catch (err) {
             return rejectWithValue(err.response.status);

@@ -55,9 +55,18 @@ function Main() {
                         <FormControl
                             unselectAll={unselectAll}
                             selectAll={selectAll}
-                            handleUsersBlock={handleDispatch.bind(null, toggleUsersBlock({ id: selected, block: true }))}
-                            handleUsersUnblock={handleDispatch.bind(null, toggleUsersBlock({ id: selected, block: false }))}
-                            handleUsersDelete={handleDispatch.bind(null, deleteUsers({ id: selected }))}
+                            handleUsersBlock={handleDispatch.bind(
+                                null,
+                                toggleUsersBlock({ id: selected, block: true })
+                            )}
+                            handleUsersUnblock={handleDispatch.bind(
+                                null,
+                                toggleUsersBlock({ id: selected, block: false })
+                            )}
+                            handleUsersDelete={handleDispatch.bind(
+                                null,
+                                deleteUsers({ id: selected })
+                            )}
                             isValid={
                                 selected.length > 0 && status !== 'pending'
                             }
