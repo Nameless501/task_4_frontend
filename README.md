@@ -1,6 +1,6 @@
 # <p align="center">Задание 4 (front-end)</p>
 
-<div align="center"><a href="https://nameless501.github.io/task_4_frontend">Ссылка на Gh-pages</a></div>
+<div align="center"><a href="https://task4frontend-production.up.railway.app">Ссылка на сайт</a></div>
 
 ---
 
@@ -12,6 +12,6 @@ SPA - реализована страница регистрации/логин�
 
 ### Стек:
 
-React, Redux (RTK), React router, Bootstrap, 
+React, Redux (RTK), React router, Bootstrap
 
 ---
