@@ -1,13 +1,16 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Container, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { handleSignOut } from '../store/currentUser/currentUserSlice';
 import AuthMenu from './AuthMenu';
 import ProfileMenu from './ProfileMenu';
 import { SiTask } from 'react-icons/si';
-import { routesConfig } from '../utils/configs';
+import { routesConfig, apiConfig } from '../utils/configs';
 
 function Header() {
-    const { isAuthorized } = useSelector((state) => state.authentication);
+    const { user, status, isAuthorized } = useSelector((state) => state.currentUser);
+
+    const dispatch = useDispatch();
 
     return (
         <Navbar expand="md" bg="dark" variant="dark">
@@ -17,7 +20,17 @@ function Header() {
                         <SiTask /> Task 4
                     </Navbar.Brand>
                 </Link>
-                {isAuthorized ? <ProfileMenu /> : <AuthMenu />}
+                {isAuthorized ? (
+                    <ProfileMenu
+                        handleClick={() =>
+                            dispatch(handleSignOut(apiConfig.signOut))
+                        }
+                        user={user}
+                        disabled={status === 'pending'}
+                    />
+                ) : (
+                    <AuthMenu />
+                )}
             </Container>
         </Navbar>
     );

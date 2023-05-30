@@ -6,6 +6,7 @@ function FormInput({
     placeholder,
     id,
     name,
+    validation,
     value = '',
     error,
     handleChange,
@@ -19,6 +20,7 @@ function FormInput({
                 name={name}
                 value={value}
                 onChange={handleChange}
+                {...validation}
                 size="lg"
                 required={true}
                 isInvalid={error}

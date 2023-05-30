@@ -1,24 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { Stack, Container, Form, Spinner } from 'react-bootstrap';
 import {
     getUsersData,
     toggleUsersBlock,
     deleteUsers,
 } from '../../store/users/usersSlice';
+import { useAuthorizationContext } from '../../contexts/AuthorizationContext';
 import FormControl from './components/FromControl';
 import UsersTable from './components/UsersTable';
-import { routesConfig } from '../../utils/configs';
 
 function Main() {
     const [selected, setSelected] = useState([]);
 
-    const { users, status, statusCode } = useSelector((state) => state.users);
+    const { users, status } = useSelector((state) => state.users);
+
+    const { checkAuthorization } = useAuthorizationContext();
 
     const dispatch = useDispatch();
-
-    const navigate = useNavigate();
 
     function handleUserSelect(evt) {
         const id = Number(evt.target.value);
@@ -37,20 +36,15 @@ function Main() {
         setSelected([]);
     }
 
-    function handleUserBlock(block) {
-        dispatch(toggleUsersBlock({ id: selected, block }));
-        unselectAll();
+    function handleDispatch(fn) {
+        dispatch(fn)
+            .then(() => unselectAll())
+            .then(() => checkAuthorization());
     }
 
     useEffect(() => {
         dispatch(getUsersData());
     }, [dispatch]);
-
-    useEffect(() => {
-        if (status === 'rejected' && statusCode === 403) {
-            navigate(routesConfig.signIn);
-        }
-    }, [status, statusCode, navigate]);
 
     return (
         <Stack as="main" gap={4}>
@@ -61,14 +55,9 @@ function Main() {
                         <FormControl
                             unselectAll={unselectAll}
                             selectAll={selectAll}
-                            handleUsersBlock={handleUserBlock.bind(null, true)}
-                            handleUsersUnblock={handleUserBlock.bind(
-                                null,
-                                false
-                            )}
-                            handleUsersDelete={() =>
-                                dispatch(deleteUsers({ id: selected }))
-                            }
+                            handleUsersBlock={handleDispatch.bind(null, toggleUsersBlock({ id: selected, block: true }))}
+                            handleUsersUnblock={handleDispatch.bind(null, toggleUsersBlock({ id: selected, block: false }))}
+                            handleUsersDelete={handleDispatch.bind(null, deleteUsers({ id: selected }))}
                             isValid={
                                 selected.length > 0 && status !== 'pending'
                             }

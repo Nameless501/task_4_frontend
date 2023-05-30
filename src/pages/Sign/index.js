@@ -1,7 +1,11 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Container, Stack } from 'react-bootstrap';
-import { handleAuthentication } from '../../store/authentication/authenticationSlice';
+import { Container, Stack, Alert } from 'react-bootstrap';
+import {
+    handleAuthentication,
+    resetErrors,
+} from '../../store/currentUser/currentUserSlice';
 import useFormStateAndValidation from '../../hooks/useFormStateAndValidation';
 import SignForm from './components/SignForm';
 import { signFormConfig } from '../../utils/configs';
@@ -12,9 +16,7 @@ function Sign() {
     const { inputsValue, errorMessages, formIsValid, handleChange } =
         useFormStateAndValidation();
 
-    const { users, status, statusCode } = useSelector(
-        (state) => state.authentication
-    );
+    const { status, error } = useSelector((state) => state.currentUser);
 
     const dispatch = useDispatch();
 
@@ -34,6 +36,10 @@ function Sign() {
         });
     }
 
+    useEffect(() => {
+        dispatch(resetErrors());
+    }, [location, dispatch]);
+
     return (
         <Stack gap={3}>
             <h2 className="text-center">
@@ -47,7 +53,16 @@ function Sign() {
                     isValid={formIsValid}
                     errorMessages={errorMessages}
                     handleSubmit={handleSubmit}
+                    isLoading={status === 'pending'}
                 />
+                {status === 'rejected' && error && (
+                    <Alert
+                        variant="danger"
+                        className="text-center p-2 mb-0 mt-2"
+                    >
+                        {error}
+                    </Alert>
+                )}
             </Container>
         </Stack>
     );

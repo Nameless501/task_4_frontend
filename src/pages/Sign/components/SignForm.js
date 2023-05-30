@@ -1,4 +1,4 @@
-import { Form, Button, Stack } from 'react-bootstrap';
+import { Form, Button, Stack, Spinner } from 'react-bootstrap';
 import FormInput from './FormInput';
 
 function SignForm({
@@ -8,6 +8,7 @@ function SignForm({
     isValid = false,
     errorMessages,
     handleSubmit,
+    isLoading,
 }) {
     return (
         <Form onSubmit={handleSubmit}>
@@ -30,7 +31,11 @@ function SignForm({
                     disabled={!isValid}
                     className="mt-2 col-md-4 offset-md-4"
                 >
-                    Submit
+                    {isLoading ? (
+                        <Spinner animation="border" size="sm" role="status" />
+                    ) : (
+                        'Submit'
+                    )}
                 </Button>
             </Stack>
         </Form>

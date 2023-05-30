@@ -45,5 +45,6 @@
     "devDependencies": {
         "gh-pages": "^5.0.0",
         "prettier": "^2.8.8"
-    }
+    },
+    "homepage": "https://nameless501.github.io/task_4_frontend/"
 }
