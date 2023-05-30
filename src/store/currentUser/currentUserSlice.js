@@ -88,7 +88,11 @@ export const currentUserSlice = createSlice({
                 state.isAuthorized = false;
                 handleThunkFulfilled(state);
             })
-            .addCase(handleSignOut.rejected, handleThunkRejected);
+            .addCase(handleSignOut.rejected, (state, { payload }) => {
+                handleThunkRejected(state, { payload });
+                state.isAuthorized = false;
+                state.user = {};
+            });
 
         builder
             .addCase(handleAuthorization.pending, handleThunkPending)
@@ -97,7 +101,11 @@ export const currentUserSlice = createSlice({
                 state.isAuthorized = true;
                 handleThunkFulfilled(state);
             })
-            .addCase(handleAuthorization.rejected, handleThunkRejected);
+            .addCase(handleAuthorization.rejected, (state, { payload }) => {
+                handleThunkRejected(state, { payload });
+                state.isAuthorized = false;
+                state.user = {};
+            });
     },
 });
 
