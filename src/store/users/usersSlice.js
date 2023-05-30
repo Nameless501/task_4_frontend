@@ -1,6 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { apiConfig } from '../../utils/configs';
+import {
+    handleThunkRejected,
+    handleThunkPending,
+    handleThunkFulfilled,
+} from '../../utils/utils';
 
 export const getUsersData = createAsyncThunk(
     'users/getUsersData',
@@ -50,57 +55,39 @@ export const usersSlice = createSlice({
     initialState: {
         users: [],
         status: 'idle',
-        statusCode: null,
+        error: '',
     },
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getUsersData.pending, (state) => {
-                state.status = 'pending';
-            })
+            .addCase(getUsersData.pending, handleThunkPending)
             .addCase(getUsersData.fulfilled, (state, { payload }) => {
                 state.users = payload;
-                state.statusCode = 204;
-                state.status = 'fulfilled';
+                handleThunkFulfilled(state);
             })
-            .addCase(getUsersData.rejected, (state, { payload }) => {
-                state.statusCode = payload;
-                state.status = 'rejected';
-            });
+            .addCase(getUsersData.rejected, handleThunkRejected);
 
         builder
-            .addCase(toggleUsersBlock.pending, (state) => {
-                state.status = 'pending';
-            })
+            .addCase(toggleUsersBlock.pending, handleThunkPending)
             .addCase(toggleUsersBlock.fulfilled, (state, { payload }) => {
                 const { id, block } = payload;
                 state.users = state.users.map((user) =>
                     id.includes(user.id) ? { ...user, block } : user
                 );
-                state.statusCode = 204;
-                state.status = 'fulfilled';
+                handleThunkFulfilled(state);
             })
-            .addCase(toggleUsersBlock.rejected, (state, { payload }) => {
-                state.statusCode = payload;
-                state.status = 'rejected';
-            });
+            .addCase(toggleUsersBlock.rejected, handleThunkRejected);
 
         builder
-            .addCase(deleteUsers.pending, (state) => {
-                state.status = 'pending';
-            })
+            .addCase(deleteUsers.pending, handleThunkPending)
             .addCase(deleteUsers.fulfilled, (state, { payload }) => {
                 const { id } = payload;
                 state.users = state.users.filter(
                     (user) => !id.includes(user.id)
                 );
-                state.statusCode = 204;
-                state.status = 'fulfilled';
+                handleThunkFulfilled(state);
             })
-            .addCase(deleteUsers.rejected, (state, { payload }) => {
-                state.statusCode = payload;
-                state.status = 'rejected';
-            });
+            .addCase(deleteUsers.rejected, handleThunkRejected);
     },
 });
 

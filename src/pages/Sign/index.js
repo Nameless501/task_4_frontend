@@ -14,7 +14,7 @@ function Sign() {
     const location = useLocation();
 
     const { inputsValue, errorMessages, formIsValid, handleChange } =
-        useFormStateAndValidation();
+        useFormStateAndValidation(signFormConfig.validation[location.pathname]);
 
     const { status, error } = useSelector((state) => state.currentUser);
 

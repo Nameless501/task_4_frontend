@@ -31,3 +31,9 @@ export const DEFAULT_ERROR_CODE = 500;
 export const CREATED_CODE = 201;
 
 export const DATA_UPDATED_CODE = 204;
+
+export const EMAIL_VALIDATION_MESSAGE = 'Must be a valid email';
+
+export const NAME_VALIDATION_MESSAGE = 'Must be from 2 to 30 characters';
+
+export const PASSWORD_VALIDATION_MESSAGE = 'Required field';

@@ -1,21 +1,15 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { validationConfig } from '../utils/configs';
 
-function useFormStateAndValidation(initialValue = {}) {
-    const [inputsValue, setInputsValues] = useState(initialValue);
+function useFormStateAndValidation(validationSchema) {
+    const [inputsValue, setInputsValues] = useState({});
 
     const [errorMessages, setErrorMessages] = useState({});
 
     const [formIsValid, setFormValidity] = useState(false);
 
     const location = useLocation();
-
-    function handleStoreValues(name, value) {
-        setInputsValues((current) => ({
-            ...current,
-            [name]: value,
-        }));
-    }
 
     function handleErrorMessage(name, message) {
         setErrorMessages((current) => ({
@@ -24,16 +18,25 @@ function useFormStateAndValidation(initialValue = {}) {
         }));
     }
 
-    function handleValidation(evt, name, validationMessage) {
-        const isValid = evt.target.closest('form').checkValidity();
-        handleErrorMessage(name, validationMessage);
-        setFormValidity(isValid);
+    function checkInputValidity(name, value) {
+        try {
+            validationConfig[name].validateSync(value);
+            handleErrorMessage(name, '');
+        } catch (err) {
+            handleErrorMessage(name, err.message);
+        }
+    }
+
+    function checkFormValidity(value) {
+        setFormValidity(() => validationSchema.isValidSync(value));
     }
 
     function handleChange(evt) {
-        const { name, value, validationMessage } = evt.target;
-        handleStoreValues(name, value);
-        handleValidation(evt, name, validationMessage);
+        const { name, value } = evt.target;
+        const current = { ...inputsValue, [name]: value };
+        checkInputValidity(name, value);
+        checkFormValidity(current);
+        setInputsValues(current);
     }
 
     const resetFormValues = useCallback(

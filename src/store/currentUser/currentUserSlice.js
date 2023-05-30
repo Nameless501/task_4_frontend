@@ -1,6 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { apiConfig, apiErrorsConfig } from '../../utils/configs';
+import { apiConfig } from '../../utils/configs';
+import {
+    handleThunkRejected,
+    handleThunkPending,
+    handleThunkFulfilled,
+} from '../../utils/utils';
 
 export const handleAuthentication = createAsyncThunk(
     'currentUser/handleAuthentication',
@@ -63,9 +68,7 @@ export const currentUserSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(handleAuthentication.pending, (state) => {
-                state.status = 'pending';
-            })
+            .addCase(handleAuthentication.pending, handleThunkPending)
             .addCase(
                 handleAuthentication.fulfilled,
                 (state, { meta, payload }) => {
@@ -73,44 +76,28 @@ export const currentUserSlice = createSlice({
                         state.user = payload;
                         state.isAuthorized = true;
                     }
-                    state.error = '';
-                    state.status = 'fulfilled';
+                    handleThunkFulfilled(state);
                 }
             )
-            .addCase(handleAuthentication.rejected, (state, { payload }) => {
-                state.error = apiErrorsConfig[payload];
-                state.status = 'rejected';
-            });
+            .addCase(handleAuthentication.rejected, handleThunkRejected);
 
         builder
-            .addCase(handleSignOut.pending, (state) => {
-                state.status = 'pending';
-            })
+            .addCase(handleSignOut.pending, handleThunkPending)
             .addCase(handleSignOut.fulfilled, (state) => {
                 state.user = {};
                 state.isAuthorized = false;
-                state.error = '';
-                state.status = 'fulfilled';
+                handleThunkFulfilled(state);
             })
-            .addCase(handleSignOut.rejected, (state, { payload }) => {
-                state.error = apiErrorsConfig[payload];
-                state.status = 'rejected';
-            });
+            .addCase(handleSignOut.rejected, handleThunkRejected);
 
         builder
-            .addCase(handleAuthorization.pending, (state) => {
-                state.status = 'pending';
-            })
+            .addCase(handleAuthorization.pending, handleThunkPending)
             .addCase(handleAuthorization.fulfilled, (state, { payload }) => {
                 state.user = payload;
                 state.isAuthorized = true;
-                state.error = '';
-                state.status = 'fulfilled';
+                handleThunkFulfilled(state);
             })
-            .addCase(handleAuthorization.rejected, (state) => {
-                state.isAuthorized = false;
-                state.status = 'rejected';
-            });
+            .addCase(handleAuthorization.rejected, handleThunkRejected);
     },
 });
 

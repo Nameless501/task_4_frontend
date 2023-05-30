@@ -12,7 +12,12 @@ import {
     EMAIL_CONFLICT_MESSAGE,
     DEFAULT_ERROR_MESSAGE,
     SIGN_OUT_API_URL,
+    EMAIL_VALIDATION_MESSAGE,
+    NAME_VALIDATION_MESSAGE,
+    PASSWORD_VALIDATION_MESSAGE,
 } from './constants';
+
+import { object, string } from 'yup';
 
 export const usersTableConfig = {
     cols: [
@@ -42,6 +47,15 @@ export const apiConfig = {
     currentUser: CURRENT_USER_API_URL,
 };
 
+export const validationConfig = {
+    name: string()
+        .min(2, NAME_VALIDATION_MESSAGE)
+        .max(30, NAME_VALIDATION_MESSAGE)
+        .required(),
+    email: string().email(EMAIL_VALIDATION_MESSAGE),
+    password: string().required(PASSWORD_VALIDATION_MESSAGE),
+};
+
 export const signFormConfig = {
     inputs: {
         [routesConfig.signUp]: [
@@ -51,10 +65,6 @@ export const signFormConfig = {
                 placeholder: 'Enter your name',
                 id: 'name-input',
                 name: 'name',
-                validation: {
-                    minLength: 2,
-                    maxLength: 30,
-                },
             },
             {
                 type: 'email',
@@ -62,7 +72,6 @@ export const signFormConfig = {
                 placeholder: 'Enter your email',
                 id: 'email-input',
                 name: 'email',
-                validation: {},
             },
             {
                 type: 'password',
@@ -70,7 +79,6 @@ export const signFormConfig = {
                 placeholder: 'Enter your password',
                 id: 'password-input',
                 name: 'password',
-                validation: {},
             },
         ],
         [routesConfig.signIn]: [
@@ -80,7 +88,6 @@ export const signFormConfig = {
                 placeholder: 'Enter your email',
                 id: 'email-input',
                 name: 'email',
-                validation: {},
             },
             {
                 type: 'password',
@@ -88,7 +95,6 @@ export const signFormConfig = {
                 placeholder: 'Enter your password',
                 id: 'password-input',
                 name: 'password',
-                validation: {},
             },
         ],
     },
@@ -103,6 +109,17 @@ export const signFormConfig = {
     redirect: {
         [routesConfig.signIn]: routesConfig.main,
         [routesConfig.signUp]: routesConfig.signIn,
+    },
+    validation: {
+        [routesConfig.signIn]: object({
+            email: validationConfig.email,
+            password: validationConfig.password,
+        }),
+        [routesConfig.signUp]: object({
+            name: validationConfig.name,
+            email: validationConfig.email,
+            password: validationConfig.password,
+        }),
     },
 };
 
